@@ -3,12 +3,25 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import {QueryClient, QueryClientProvider}from  "react-query";
+import {ReactQueryDevtools} from "react-query/devtools";
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    }
+  }
+});
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+ 
+  <React.Suspense fallback={<div>로딩중</div>}>
+      <QueryClientProvider client={queryClient} >
+      <ReactQueryDevtools initialIsOpen={true} />
     <App />
-  </React.StrictMode>
+    </QueryClientProvider>
+  </React.Suspense>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
